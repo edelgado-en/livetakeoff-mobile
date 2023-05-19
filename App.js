@@ -1,22 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-import Screen from './app/components/Screen';
+import LoginScreen from './app/screens/LoginScreen';
 
 export default function App() {
   return (
-    <Screen>
-        <MaterialCommunityIcons name="email" size={200} color="dodgerblue" />
-    </Screen>
+    <LoginScreen />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
