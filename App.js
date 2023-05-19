@@ -2,13 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import Screen from './app/components/Screen';
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <MaterialCommunityIcons name="email" size={24} color="black" />
-      <StatusBar style="auto" />
-    </View>
+    <Screen>
+        <MaterialCommunityIcons name="email" size={200} color="dodgerblue" />
+    </Screen>
   );
 }
 
