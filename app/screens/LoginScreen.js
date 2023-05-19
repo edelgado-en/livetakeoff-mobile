@@ -15,42 +15,42 @@ const LoginScreen = () => {
         console.log(values)
     }
 
-  return (
-    <Screen style={styles.container}>
-        <Image 
-            style={styles.logo}
-            source={require('../../assets/logo-text.jpg')}
-        />
-        <AppForm
-            initialValues={{
-                username: '',
-                password: ''
-            }}
-            onSubmit={handleSubmit}
-        >
-            <ErrorMessage error="Invalid username and/or password." visible={loginFailed} />
-            <AppFormField 
-                placeholder="Username"
-                autoCorrect={false}
-                name="username"
-                icon="account"
-                autoCapitalize="none"
+    return (
+        <Screen style={styles.container}>
+            <Image 
+                style={styles.logo}
+                source={require('../../assets/logo-text.jpg')}
             />
+            <AppForm
+                initialValues={{
+                    username: '',
+                    password: ''
+                }}
+                onSubmit={handleSubmit}
+            >
+                <ErrorMessage error="Invalid username and/or password." visible={loginFailed} />
+                <AppFormField 
+                    placeholder="Username"
+                    autoCorrect={false}
+                    name="username"
+                    icon="account"
+                    autoCapitalize="none"
+                />
 
-            <AppFormField 
-                placeholder="Password"
-                autoCorrect={false}
-                name="password"
-                autoCapitalize="none"
-                secureTextEntry
-                icon="lock"
-                textContentType="password"
-            />
+                <AppFormField 
+                    placeholder="Password"
+                    autoCorrect={false}
+                    name="password"
+                    autoCapitalize="none"
+                    secureTextEntry
+                    icon="lock"
+                    textContentType="password"
+                />
 
-            <SubmitButton title="Login" />
-        </AppForm>
-    </Screen>
-  )
+                <SubmitButton title="Login" />
+            </AppForm>
+        </Screen>
+    )
 }
 
 const styles = StyleSheet.create({
