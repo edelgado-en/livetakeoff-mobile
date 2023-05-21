@@ -3,6 +3,11 @@ import { View, Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
+import NewJobButton from '../NewJobButton'
+import NewJobScreen from '../../screens/NewJobScreen'
+
+import colors from '../../config/colors'
+
 const Tab = createBottomTabNavigator();
 
 const Screen1 = () => {
@@ -24,8 +29,44 @@ const Screen2 = () => {
 const AppNavigator = () => {
   return (
     <Tab.Navigator>
-        <Tab.Screen name="Screen 1" component={Screen1} />
-        <Tab.Screen name="Screen 2" component={Screen2} />
+        <Tab.Screen 
+            name="Home"
+            component={Screen1}
+            options={{
+                tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="home" color={color} size={size} />
+                ),
+            }}
+        />
+        
+        <Tab.Screen
+            name="NewJob"
+            component={NewJobScreen}
+            options={({ navigation }) => ({
+                tabBarButton: () => (
+                <NewJobButton
+                    onPress={() => navigation.navigate("NewJob")}
+                />
+                ),
+                tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons
+                    name="plus-circle"
+                    color={color}
+                    size={size}
+                />
+                ),
+            })}
+        />
+        
+        <Tab.Screen 
+            name="Account"
+            component={Screen2}
+            options={{
+                tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="account" color={color} size={size} />
+                ),
+            }}    
+        />
     </Tab.Navigator>
   )
 }
