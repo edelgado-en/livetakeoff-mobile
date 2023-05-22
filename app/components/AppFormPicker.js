@@ -36,7 +36,7 @@ const AppFormPicker = ({
 
 const styles = StyleSheet.create({
     label: {
-        marginTop: 20
+        marginTop: 20,
     }
 })
 

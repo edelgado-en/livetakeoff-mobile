@@ -32,6 +32,15 @@ const fbos = [
     { label: "FBO 2", value: 2 },
 ]
 
+const interiorServices = [
+    { label: "Interior Service 1", value: 1 },
+    { label: "Interior Service 2", value: 2 },
+]
+
+const exteriorServices = [
+    { label: "Exterior Service 1", value: 1 },
+    { label: "Exterior Service 2", value: 2 },
+]
 
 
 const NewJobScreen = () => {
@@ -103,7 +112,7 @@ const NewJobScreen = () => {
                     name="comment"
                     numberOfLines={5}
                 />
-                
+
                 <AppText style={{ marginTop: 20 }}>Add Photos</AppText>
                 <FormImagePicker name="images" />
 
