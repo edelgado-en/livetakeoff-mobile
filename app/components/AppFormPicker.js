@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { useFormikContext } from 'formik'
 
 import AppPicker from './AppPicker'
 import ErrorMessage from './ErrorMessage'
+import AppText from './AppText'
 
 const AppFormPicker = ({
     items,
@@ -11,12 +12,14 @@ const AppFormPicker = ({
     numberOfColumns,
     PickerItemComponent,
     placeholder,
-    width
+    width,
+    label
 }) => {
     const { errors, setFieldValue, touched, values } = useFormikContext();
 
   return (
     <>
+        {label && <AppText style={styles.label}>{label}</AppText>}
         <AppPicker
             items={items}
             numberOfColumns={numberOfColumns}
@@ -30,5 +33,11 @@ const AppFormPicker = ({
     </>
   )
 }
+
+const styles = StyleSheet.create({
+    label: {
+        marginTop: 20
+    }
+})
 
 export default AppFormPicker

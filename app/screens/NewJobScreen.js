@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import * as Yup from 'yup'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 import AppForm from '../components/AppForm'
 import AppFormField from '../components/AppFormField'
@@ -9,6 +10,7 @@ import SubmitButton from '../components/SubmitButton'
 import Screen from '../components/Screen'
 import FormImagePicker from '../components/FormImagePicker'
 import CategoryPickerItem from '../components/CategoryPickerItem'
+import AppText from '../components/AppText'
 
 const customers = [
     { label: "Customer 1", value: 1 },
@@ -34,69 +36,82 @@ const fbos = [
 
 const NewJobScreen = () => {
   return (
-    <Screen style={styles.container}>
-        <AppForm
-            initialValues={{
-                tailNumber: "",
-                customer: null,
-                aircraftType: null,
-                airport: null,
-                fbo: null,
-                comment: "",
-                images: []
-            }}
-            onSubmit={(values) => console.log(values)}
-            >
-            <AppFormField name="tailNumber" placeholder="Tail number" />
+    <ScrollView>
+        <Screen style={styles.container}>
+            <AppForm
+                initialValues={{
+                    tailNumber: "",
+                    customer: null,
+                    aircraftType: null,
+                    airport: null,
+                    fbo: null,
+                    comment: "",
+                    images: [],
+                    arrivalDate: null
+                }}
+                onSubmit={(values) => console.log(values)}
+                >
+                <AppFormField 
+                    label="Tail Number"
+                    name="tailNumber" />
 
-            <AppFormPicker 
-                items={customers}
-                name="customer"
-                placeholder="Customer"
-                numberOfColumns={3}
-                width="100%"
-                PickerItemComponent={CategoryPickerItem}
-            />
+                <AppFormPicker 
+                    label="Customer"
+                    items={customers}
+                    name="customer"
+                    placeholder="Customer"
+                    numberOfColumns={3}
+                    width="100%"
+                    PickerItemComponent={CategoryPickerItem}
+                />
 
-            <AppFormPicker 
-                items={aircraftTypes}
-                name="aircraftType"
-                placeholder="Aircraft Type"
-                numberOfColumns={3}
-                width="100%"
-                PickerItemComponent={CategoryPickerItem}
-            />
+                <AppFormPicker 
+                    label="Aircraft Type"
+                    items={aircraftTypes}
+                    name="aircraftType"
+                    placeholder="Aircraft Type"
+                    numberOfColumns={3}
+                    width="100%"
+                    PickerItemComponent={CategoryPickerItem}
+                />
+                
+                <AppFormPicker 
+                    label="Airport"
+                    items={airports}
+                    name="airport"
+                    placeholder="Airport"
+                    numberOfColumns={3}
+                    width="100%"
+                    PickerItemComponent={CategoryPickerItem}
+                />
 
-            <AppFormPicker 
-                items={airports}
-                name="airport"
-                placeholder="Airport"
-                numberOfColumns={3}
-                width="100%"
-                PickerItemComponent={CategoryPickerItem}
-            />
+                <AppFormPicker 
+                    label="FBO"
+                    items={fbos}
+                    name="fbo"
+                    placeholder="FBO"
+                    numberOfColumns={3}
+                    width="100%"
+                    PickerItemComponent={CategoryPickerItem}
+                />
 
-            <AppFormPicker 
-                items={fbos}
-                name="fbo"
-                placeholder="FBO"
-                numberOfColumns={3}
-                width="100%"
-                PickerItemComponent={CategoryPickerItem}
-            />
+                <View style={{ marginTop: 20 }}></View>
+                <AppFormField
+                    label="Add a comment" 
+                    maxLength={255}
+                    multiline
+                    name="comment"
+                    numberOfLines={5}
+                />
+                
+                <AppText style={{ marginTop: 20 }}>Add Photos</AppText>
+                <FormImagePicker name="images" />
 
-            <AppFormField 
-                maxLength={255}
-                multiline
-                name="comment"
-                numberOfLines={5}
-                placeholder="Add a comment"
-            />
-
-            <FormImagePicker name="images" />
-            <SubmitButton title="Create Job" />
-        </AppForm>
-    </Screen>
+                <View style={{ marginTop: 20 }}></View>
+                <SubmitButton title="Create Job" />
+            </AppForm>
+        </Screen>
+    </ScrollView>
   )
 }
 

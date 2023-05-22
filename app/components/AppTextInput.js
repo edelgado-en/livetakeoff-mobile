@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: defaultStyles.colors.light,
         borderRadius: 25,
-        flexDirection: 'row',
+        flexDirection: 'row',   
         width: '100%',
         padding: 15,
-        marginVertical: 10,
+        marginVertical: 5,
     },
     icon: {
         marginRight: 10,

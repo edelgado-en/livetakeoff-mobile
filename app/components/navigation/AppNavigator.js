@@ -40,12 +40,12 @@ const AppNavigator = () => {
         />
         
         <Tab.Screen
-            name="NewJob"
+            name="Create Job"
             component={NewJobScreen}
             options={({ navigation }) => ({
                 tabBarButton: () => (
                 <NewJobButton
-                    onPress={() => navigation.navigate("NewJob")}
+                    onPress={() => navigation.navigate("Create Job")}
                 />
                 ),
                 tabBarIcon: ({ color, size }) => (
