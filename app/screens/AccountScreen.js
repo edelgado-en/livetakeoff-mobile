@@ -13,11 +13,12 @@ const menuItems = [
         icon: {
             name: "lock-reset",
             backgroundColor: colors.primary
-        }
+        },
+        targetScreen: "Reset Password"
     }
 ]
 
-const AccountScreen = () => {
+const AccountScreen = ({ navigation }) => {
   return (
     <Screen style={styles.screen}>
         <View style={styles.container}>
@@ -37,7 +38,8 @@ const AccountScreen = () => {
                         title={item.title}
                         IconComponent={
                             <Icon name={item.icon.name} backgroundColor={item.icon.backgroundColor}/>
-                        }  
+                        }
+                        onPress={() => navigation.navigate(item.targetScreen)}  
                     />
                 )}
             />
