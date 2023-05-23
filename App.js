@@ -4,14 +4,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import navigationTheme from './app/components/navigation/navigationTheme';
 import AppNavigator from './app/components/navigation/AppNavigator';
 
-import LoginScreen from './app/screens/LoginScreen';
-import AccountScreen from './app/screens/AccountScreen';
+import WelcomeScreen from './app/screens/WelcomeScreen';
+
+{/* <NavigationContainer theme={navigationTheme}>
+        <AppNavigator />
+    </NavigationContainer> */}
 
 export default function App() {
   return (
-    <NavigationContainer theme={navigationTheme}>
-        <AppNavigator />
-    </NavigationContainer>
+      <WelcomeScreen />
+    
   );
 }
 

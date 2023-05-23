@@ -47,7 +47,7 @@ const LoginScreen = () => {
                     textContentType="password"
                 />
 
-                <SubmitButton title="Login" />
+                <SubmitButton title="Log In" />
             </AppForm>
         </Screen>
     )
