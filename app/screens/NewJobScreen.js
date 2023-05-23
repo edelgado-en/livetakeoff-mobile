@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, View, Text, ScrollView, TextInput } from 'react-native'
 import * as Yup from 'yup'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
@@ -11,6 +11,8 @@ import Screen from '../components/Screen'
 import FormImagePicker from '../components/FormImagePicker'
 import CategoryPickerItem from '../components/CategoryPickerItem'
 import AppText from '../components/AppText'
+
+import defaultStyles from '../config/styles'    
 
 const customers = [
     { label: "Customer 1", value: 1 },
@@ -44,7 +46,7 @@ const exteriorServices = [
 
 
 const NewJobScreen = () => {
-  return (
+    return (
     <ScrollView>
         <Screen style={styles.container}>
             <AppForm
@@ -61,7 +63,6 @@ const NewJobScreen = () => {
                 onSubmit={(values) => console.log(values)}
                 >
                 <AppFormField 
-                    label="Tail Number"
                     name="tailNumber" />
 
                 <AppFormPicker 
@@ -106,7 +107,6 @@ const NewJobScreen = () => {
 
                 <View style={{ marginTop: 20 }}></View>
                 <AppFormField
-                    label="Add a comment" 
                     maxLength={255}
                     multiline
                     name="comment"
@@ -118,7 +118,7 @@ const NewJobScreen = () => {
 
                 <View style={{ marginTop: 20 }}></View>
                 <SubmitButton title="Create Job" />
-            </AppForm>
+            </AppForm> 
         </Screen>
     </ScrollView>
   )
@@ -127,6 +127,18 @@ const NewJobScreen = () => {
 const styles = StyleSheet.create({
     container: {
         padding: 20
+    },
+    textContainer: {
+        backgroundColor: defaultStyles.colors.light,
+        //color: defaultStyles.colors.medium,
+        borderRadius: 25,
+        flexDirection: 'row',   
+        width: '100%',
+        padding: 15,
+        marginVertical: 5,
+    },
+    text: {
+
     }
 })
 

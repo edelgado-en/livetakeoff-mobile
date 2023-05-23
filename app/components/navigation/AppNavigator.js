@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import NewJobButton from '../NewJobButton'
 import NewJobScreen from '../../screens/NewJobScreen'
+import AccountScreen from '../../screens/AccountScreen'
 
 import colors from '../../config/colors'
 
@@ -60,7 +61,7 @@ const AppNavigator = () => {
         
         <Tab.Screen 
             name="Account"
-            component={Screen2}
+            component={AccountScreen}
             options={{
                 tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="account" color={color} size={size} />
