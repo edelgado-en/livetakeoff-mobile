@@ -18,7 +18,6 @@ export default useAuth = () => {
         const result = await userApi.getCurrentUser();
 
         if (!result.ok) {
-            console.log(result);
             setUser(null)
             return;
         }
