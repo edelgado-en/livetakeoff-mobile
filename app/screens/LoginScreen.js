@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image } from 'react-native'
+import * as Yup from 'yup'
 
 import Screen from '../components/Screen'
 import AppForm from '../components/AppForm'
@@ -9,6 +10,11 @@ import ErrorMessage from '../components/ErrorMessage'
 
 import authApi from '../api/auth'
 import useAuth from '../auth/useAuth'
+
+const validationSchema = Yup.object().shape({
+    username: Yup.string().required().label("Username"),
+    password: Yup.string().required().min(4).label("Password"),
+});
 
 const LoginScreen = () => {
     const auth = useAuth();
@@ -38,8 +44,12 @@ const LoginScreen = () => {
                     password: ''
                 }}
                 onSubmit={handleSubmit}
+                validationSchema={validationSchema}
             >
-                <ErrorMessage error="Invalid username and/or password." visible={loginFailed} />
+                <ErrorMessage 
+                    error="Invalid username and/or password."
+                    visible={loginFailed}
+                />
                 <AppFormField 
                     placeholder="Username"
                     autoCorrect={false}

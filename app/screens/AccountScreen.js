@@ -7,6 +7,8 @@ import Screen from '../components/Screen'
 import ListItemSeparator from '../components/ListItemSeparator'
 import Icon from '../components/Icon'
 
+import useAuth from '../auth/useAuth'
+
 const menuItems = [
     {
         title: "Reset Password",
@@ -19,13 +21,15 @@ const menuItems = [
 ]
 
 const AccountScreen = ({ navigation }) => {
-  return (
+    const { user, logOut } = useAuth();
+
+    return (
     <Screen style={styles.screen}>
         <View style={styles.container}>
             <ListItem 
-                title="Enrique Delgado"
-                subtitle="enriquedelgado806@gmail.com"
-                image={require('../../assets/profile.jpeg')}
+                title={user.first_name + ' ' + user.last_name}
+                subtitle={user.email}
+                image={{ uri: user.avatar }}
             />
         </View>
         <View style={styles.container}>
@@ -47,6 +51,7 @@ const AccountScreen = ({ navigation }) => {
         <ListItem 
             title="Log Out"
             IconComponent={<Icon name="logout" backgroundColor="#ffe66d"/>}
+            onPress={() => logOut()}
         />
 
     </Screen>
