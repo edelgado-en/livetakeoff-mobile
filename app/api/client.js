@@ -6,7 +6,13 @@ const apiClient = create({
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
-    console.log('request', request)
+
+    if (!request.url.endsWith('/token/')) {
+        console.log('url that needs authentication')
+        const token = await authStorage.getToken();
+        if (!token) return;
+        request.headers["Authorization"] = `JWT ${token}`;
+    }
 });
 
 export default apiClient;

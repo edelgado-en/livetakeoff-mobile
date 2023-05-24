@@ -3,14 +3,29 @@ import { useContext } from "react";
 import AuthContext from "./context";
 import authStorage from "./storage";
 
+import userApi from "../api/user";
+
 export default useAuth = () => {
     const { user, setUser } = useContext(AuthContext);
 
     const logIn = (authToken) => {
-        //const user = jwtDecode(authToken);
-        //setUser(user);
-        //authStorage.storeToken(authToken);
+        authStorage.storeToken(authToken);
+        
+        getCurrentUser();
     };
+
+    const getCurrentUser = async () => {
+        const result = await userApi.getCurrentUser();
+
+        console.log(result.data)
+        if (!result.ok) {
+            console.log(result);
+            setUser(null)
+            return;
+        }
+
+        setUser(result.data)
+    }
 
     const logOut = () => {
         setUser(null);

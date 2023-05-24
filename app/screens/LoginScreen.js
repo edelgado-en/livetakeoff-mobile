@@ -7,12 +7,23 @@ import AppFormField from '../components/AppFormField'
 import SubmitButton from '../components/SubmitButton'
 import ErrorMessage from '../components/ErrorMessage'
 
+import authApi from '../api/auth'
+import useAuth from '../auth/useAuth'
 
 const LoginScreen = () => {
+    const auth = useAuth();
     const [loginFailed, setLoginFailed] = useState(false)
 
-    const handleSubmit = (values) => {
-        console.log(values)
+    const handleSubmit = async ({ username, password }) => {
+        const result = await authApi.login(username, password);
+        if (!result.ok) {
+            setLoginFailed(true);
+            return;
+        } 
+
+        setLoginFailed(false);
+
+        auth.logIn(result.data.access);
     }
 
     return (
