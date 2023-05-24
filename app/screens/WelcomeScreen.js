@@ -5,7 +5,7 @@ import AppButton from '../components/AppButton'
 
 import colors from '../config/colors'
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.background}>
         <View style={styles.logoContainer}>
@@ -16,11 +16,13 @@ const WelcomeScreen = () => {
         </View>
         <View style={styles.buttonsContainer}>
             <AppButton
-            title="Login"
+                title="Login"
+                onPress={() => navigation.navigate("Login")}
             />
             <AppButton
-            title="Register"
-            color="secondary"
+                title="Register"
+                color="secondary"
+                onPress={() => navigation.navigate("Register")}
             />
         </View>
     </View>
