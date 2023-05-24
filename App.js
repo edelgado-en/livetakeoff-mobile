@@ -16,9 +16,16 @@ export default function App() {
     const [isReady, setIsReady] = useState(false);
 
     const restoreUser = async () => {
-        const user = await userApi.getCurrentUser();
-        if (user) setUser(user);
+        const result = await userApi.getCurrentUser();
+        
+        if (!result.ok) {
+            setUser(null)
+            return;
+        }
+
+        setUser(result.data)
     }
+
 
     if (!isReady) {
         return (
