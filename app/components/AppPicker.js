@@ -22,7 +22,7 @@ function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
                                 />}
 
                     {selectedItem 
-                            ? <AppText style={styles.text}>{selectedItem.label}</AppText>
+                            ? <AppText style={styles.text}>{selectedItem.name}</AppText>
                             : <AppText style={styles.placeholder}>{placeholder}</AppText>}
                     <MaterialCommunityIcons
                         name="chevron-down"
@@ -36,10 +36,10 @@ function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
                     <Button title="Close" onPress={() => setModalVisible(false)} />
                     <FlatList 
                         data={items}
-                        keyExtractor={item => item.value.toString()}
+                        keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) => 
                             <PickerItem 
-                                label={item.label}
+                                label={item.name}
                                 onPress={() => {
                                     setModalVisible(false)
                                     onSelectItem(item)
