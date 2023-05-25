@@ -49,11 +49,28 @@ const NewJobScreen = () => {
     const handleSubmit = async (job, { resetForm }) => {
         setProgress(0);
         setUploadVisible(true);
+        
+        const result = await jobApi.createJob(
+                            job,
+                            (progress) => setProgress(progress)
+        );
 
+        if (!result.ok) {
+            console.log(result)
+            setUploadVisible(false);
+            return alert("Could not create job.")
+        }
+
+        resetForm();
     }
 
     return (
         <Screen style={styles.container}>
+            <UploadScreen 
+                onDone={() => setUploadVisible(false)}
+                progress={progress}
+                visible={uploadVisible}
+            />
             <AppForm
                 initialValues={{
                     tailNumber: "",
@@ -65,7 +82,7 @@ const NewJobScreen = () => {
                     images: [],
                     arrivalDate: null
                 }}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={handleSubmit}
                 >
                 <AppFormField 
                     label="Tail Number"
