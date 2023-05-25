@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView, TextInput } from 'react-native'
 import * as Yup from 'yup'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -12,7 +12,11 @@ import FormImagePicker from '../components/FormImagePicker'
 import CategoryPickerItem from '../components/CategoryPickerItem'
 import AppText from '../components/AppText'
 
-import defaultStyles from '../config/styles'    
+import defaultStyles from '../config/styles' 
+
+import UploadScreen from './UploadScreen'
+
+import jobApi from '../api/job'
 
 const customers = [
     { label: "Customer 1", value: 1 },
@@ -46,81 +50,104 @@ const exteriorServices = [
 
 
 const NewJobScreen = () => {
+    const [uploadVisible, setUploadVisible] = useState(false);
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        getFormInfo();
+    }, [])
+
+    const getFormInfo = async () => {
+        const result = await jobApi.getJobFormInfo();
+        if (!result.ok) {
+            console.log(result);
+            return;
+        }
+
+        
+    }
+
+    const handleSubmit = async (job, { resetForm }) => {
+        setProgress(0);
+        setUploadVisible(true);
+
+    }
+
     return (
-    <ScrollView>
-        <Screen style={styles.container}>
-            <AppForm
-                initialValues={{
-                    tailNumber: "",
-                    customer: null,
-                    aircraftType: null,
-                    airport: null,
-                    fbo: null,
-                    comment: "",
-                    images: [],
-                    arrivalDate: null
-                }}
-                onSubmit={(values) => console.log(values)}
-                >
-                <AppFormField 
-                    name="tailNumber" />
+        <ScrollView>
+            <Screen style={styles.container}>
+                <AppForm
+                    initialValues={{
+                        tailNumber: "",
+                        customer: null,
+                        aircraftType: null,
+                        airport: null,
+                        fbo: null,
+                        comment: "",
+                        images: [],
+                        arrivalDate: null
+                    }}
+                    onSubmit={(values) => console.log(values)}
+                    >
+                    <AppFormField 
+                        name="tailNumber" />
 
-                <AppFormPicker 
-                    label="Customer"
-                    items={customers}
-                    name="customer"
-                    placeholder="Customer"
-                    numberOfColumns={3}
-                    width="100%"
-                    PickerItemComponent={CategoryPickerItem}
-                />
+                    <AppFormPicker 
+                        label="Customer"
+                        items={customers}
+                        name="customer"
+                        placeholder="Customer"
+                        numberOfColumns={3}
+                        width="100%"
+                        PickerItemComponent={CategoryPickerItem}
+                    />
 
-                <AppFormPicker 
-                    label="Aircraft Type"
-                    items={aircraftTypes}
-                    name="aircraftType"
-                    placeholder="Aircraft Type"
-                    numberOfColumns={3}
-                    width="100%"
-                    PickerItemComponent={CategoryPickerItem}
-                />
-                
-                <AppFormPicker 
-                    label="Airport"
-                    items={airports}
-                    name="airport"
-                    placeholder="Airport"
-                    numberOfColumns={3}
-                    width="100%"
-                    PickerItemComponent={CategoryPickerItem}
-                />
+                    <AppFormPicker 
+                        label="Aircraft Type"
+                        items={aircraftTypes}
+                        name="aircraftType"
+                        placeholder="Aircraft Type"
+                        numberOfColumns={3}
+                        width="100%"
+                        PickerItemComponent={CategoryPickerItem}
+                    />
+                    
+                    <AppFormPicker 
+                        label="Airport"
+                        items={airports}
+                        name="airport"
+                        placeholder="Airport"
+                        numberOfColumns={3}
+                        width="100%"
+                        PickerItemComponent={CategoryPickerItem}
+                    />
 
-                <AppFormPicker 
-                    label="FBO"
-                    items={fbos}
-                    name="fbo"
-                    placeholder="FBO"
-                    numberOfColumns={3}
-                    width="100%"
-                    PickerItemComponent={CategoryPickerItem}
-                />
+                    <AppFormPicker 
+                        label="FBO"
+                        items={fbos}
+                        name="fbo"
+                        placeholder="FBO"
+                        numberOfColumns={3}
+                        width="100%"
+                        PickerItemComponent={CategoryPickerItem}
+                    />
 
-                <View style={{ marginTop: 20 }}></View>
-                <AppFormField
-                    maxLength={255}
-                    multiline
-                    name="comment"
-                    numberOfLines={5}
-                />
+                    <View style={{ marginTop: 20 }}></View>
+                    <AppFormField
+                        maxLength={255}
+                        multiline
+                        name="comment"
+                        numberOfLines={5}
+                    />
 
-                <AppText style={{ marginTop: 20 }}>Add Photos</AppText>
-                <FormImagePicker name="images" />
+                    <AppText style={{ marginTop: 20 }}>Add Photos</AppText>
+                    <FormImagePicker name="images" />
 
-                <View style={{ marginTop: 20 }}></View>
-                <SubmitButton title="Create Job" />
-            </AppForm> 
-        </Screen>
-    </ScrollView>
+                    <View style={{ marginTop: 20 }}></View>
+                    <SubmitButton title="Create Job" />
+                </AppForm> 
+            </Screen>
+        </ScrollView>
   )
 }
 
