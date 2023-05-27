@@ -29,8 +29,11 @@ const createJob = (job, onUploadProgress) => {
         'Content-Type': 'multipart/form-data',
       };
 
-    return apiClient.post('/api/jobs/create', data, { headers }, {
-        onUploadProgress: (progress) => onUploadProgress(progress.loaded / progress.total)
+    return apiClient.post('/api/jobs/create', data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: (progress) => {
+            onUploadProgress(progress.loaded / progress.total)
+        },
     });
 }
 

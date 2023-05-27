@@ -21,7 +21,7 @@ import jobApi from '../api/job'
 
 const NewJobScreen = () => {
     const [uploadVisible, setUploadVisible] = useState(false);
-    const [progress, setProgress] = useState(0);
+    const [progress, setProgress] = useState(0.0);
     const [customers, setCustomers] = useState([]);
     const [aircraftTypes, setAircraftTypes] = useState([]);
     const [airports, setAirports] = useState([]);
