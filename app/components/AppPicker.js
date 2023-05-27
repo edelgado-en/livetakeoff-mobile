@@ -32,7 +32,7 @@ function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
                 </View>
             </TouchableWithoutFeedback>
             <Modal visible={modalVisible} animationType="slide">
-                <Screen>
+                <View style={styles.modalContainer}>
                     <Button title="Close" onPress={() => setModalVisible(false)} />
                     <FlatList 
                         data={items}
@@ -47,7 +47,7 @@ function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
                             />
                         }
                     />
-                </Screen>
+                </View>
             </Modal>
         </>
     )
@@ -71,6 +71,10 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1
+    },
+    modalContainer: {
+        flex: 1,
+        padding: 20
     }
 })
 

@@ -2,9 +2,11 @@ import React from 'react'
 import AppText from './AppText'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 
+import colors from '../config/colors'
+
 function PickerItem({ label, onPress }) {
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <AppText style={styles.text}>{label}</AppText>
         </TouchableOpacity>
     )
@@ -12,8 +14,13 @@ function PickerItem({ label, onPress }) {
 
 const styles = StyleSheet.create({
     text: {
-        padding: 10,
+        padding: 15,
+    },
+    container: {
+        borderBottomWidth: 1,
+        borderBottomColor: colors.light,
     }
+
 })
 
 
