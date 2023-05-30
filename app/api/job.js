@@ -9,12 +9,12 @@ const createJob = (job, onUploadProgress) => {
     data.append("aircraft_type_id", job.aircraftType.id);
     data.append("airport_id", job.airport.id);
     data.append("fbo_id", job.fbo.id);
-    data.append("services", [1])
+    data.append("services", job.selectedServiceIds)
+    data.append("retainer_services", job.selectedRetainerServiceIds)
     data.append("on_site", false)
     data.append("estimated_arrival_date", null)
     data.append("estimated_departure_date", null)
     data.append("complete_by_date", null)
-    data.append("retainer_services", [])
     data.append("tags", [])
     data.append("comment", null)
     data.append("requested_by", null)
@@ -24,10 +24,6 @@ const createJob = (job, onUploadProgress) => {
     job.images.forEach((image, index) => {
         console.log(image)
     })
-
-    const headers = {
-        'Content-Type': 'multipart/form-data',
-      };
 
     return apiClient.post('/api/jobs/create', data, {
         headers: { 'Content-Type': 'multipart/form-data' },

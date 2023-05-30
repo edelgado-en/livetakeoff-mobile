@@ -41,7 +41,7 @@ const FormServicePicker = ({ label, services, name, updateServices }) => {
 
   return (
     <>
-        {label && <AppText style={{ marginTop: 20 }}>{label}</AppText>}
+        {label && <AppText>{label}</AppText>}
         <ServiceInputList 
             services={services}
             onToggleService={toggleService}

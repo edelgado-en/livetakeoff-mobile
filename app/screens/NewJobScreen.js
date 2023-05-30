@@ -98,6 +98,27 @@ const NewJobScreen = () => {
         setProgress(0);
         setUploadVisible(true);
         
+        let selectedServices = [];
+        selectedServices = selectedServices.concat(interiorServices.filter(service => service.selected === true));
+        selectedServices = selectedServices.concat(exteriorServices.filter(service => service.selected === true));
+        selectedServices = selectedServices.concat(otherServices.filter(service => service.selected === true));
+
+        let selectedRetainerServices = [];
+        selectedRetainerServices = selectedRetainerServices.concat(interiorRetainers.filter(service => service.selected === true));
+        selectedRetainerServices = selectedRetainerServices.concat(exteriorRetainers.filter(service => service.selected === true));
+        selectedRetainerServices = selectedRetainerServices.concat(otherRetainers.filter(service => service.selected === true));
+
+        const selectedServicesIds = selectedServices.map(service => service.id);
+        const selectedRetainerServicesIds = selectedRetainerServices.map(service => service.id);
+
+        job.selectedServiceIds = selectedServicesIds;
+        job.selectedRetainerServiceIds = selectedRetainerServicesIds;
+
+        if (selectedServices.length === 0 && selectedRetainerServices.length === 0) {
+            setUploadVisible(false);
+            return alert("Please select at least one service.")
+        }
+
         const result = await jobApi.createJob(
                             job,
                             (progress) => setProgress(progress)
@@ -175,6 +196,8 @@ const NewJobScreen = () => {
                     PickerItemComponent={CategoryPickerItem}
                 />
 
+                <View style={styles.separator}></View>
+
                 <FormServicePicker
                     label="Interior Services"
                     services={interiorServices}
@@ -182,7 +205,26 @@ const NewJobScreen = () => {
                     name="selectedInteriorServices"
                 />
 
-                <View style={{ marginTop: 20 }}></View>
+                <View style={styles.separator}></View>
+
+                <FormServicePicker
+                    label="Exterior Services"
+                    services={exteriorServices}
+                    updateServices={setExteriorServices}
+                    name="selectedExteriorServices"
+                />
+
+                <View style={styles.separator}></View>
+
+                <FormServicePicker
+                    label="Other Services"
+                    services={otherServices}
+                    updateServices={setOtherServices}
+                    name="selectedOtherServices"
+                />
+
+                <View style={styles.separator}></View>
+
                 <AppFormField
                     label="Comments"
                     maxLength={255}
@@ -191,10 +233,13 @@ const NewJobScreen = () => {
                     numberOfLines={5}
                 />
 
-                <AppText style={{ marginTop: 20 }}>Add Photos</AppText>
+                <View style={styles.separator}></View>
+
+                <AppText>Add Photos</AppText>
                 <FormImagePicker name="images" />
 
-                <View style={{ marginTop: 20 }}></View>
+                <View style={styles.separator}></View>
+
                 <SubmitButton title="Create Job" />
             </AppForm> 
         </Screen>
@@ -216,6 +261,12 @@ const styles = StyleSheet.create({
     },
     text: {
 
+    },
+    separator: {
+        marginVertical: 30,
+        borderBottomColor: defaultStyles.colors.light,
+        width: '100%',
+        borderBottomWidth: 1
     }
 })
 
