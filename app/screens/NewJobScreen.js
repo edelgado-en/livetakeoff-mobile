@@ -12,6 +12,7 @@ import Screen from '../components/Screen'
 import FormImagePicker from '../components/FormImagePicker'
 import CategoryPickerItem from '../components/CategoryPickerItem'
 import AppText from '../components/AppText'
+import FormServicePicker from '../components/FormServicePicker'
 
 import defaultStyles from '../config/styles' 
 
@@ -26,6 +27,14 @@ const NewJobScreen = () => {
     const [aircraftTypes, setAircraftTypes] = useState([]);
     const [airports, setAirports] = useState([]);
     const [fbos, setFbos] = useState([]);
+
+    const [interiorServices, setInteriorServices] = useState([]);
+    const [exteriorServices, setExteriorServices] = useState([]);
+    const [otherServices, setOtherServices] = useState([]);
+
+    const [interiorRetainers, setInteriorRetainers] = useState([]);
+    const [exteriorRetainers, setExteriorRetainers] = useState([]);
+    const [otherRetainers, setOtherRetainers] = useState([]);
 
     useEffect(() => {
         getFormInfo();
@@ -43,7 +52,46 @@ const NewJobScreen = () => {
         setAirports(result.data.airports);
         setFbos(result.data.fbos);
 
-        
+        const interior = [];
+        const exterior = [];
+        const other = [];
+
+        result.data.services.forEach(service => {
+            if (service.category === "I") {
+                interior.push(service);
+            
+            } else if (service.category === "E") {
+                exterior.push(service);
+            
+            } else {
+                other.push(service);
+            }
+        })
+
+        setInteriorServices(interior);
+        setExteriorServices(exterior);
+        setOtherServices(other);
+
+        const interiorRetainers = [];
+        const exteriorRetainers = [];
+        const otherRetainers = [];
+
+        result.data.retainer_services.forEach(retainerservice => {
+            if (retainerservice.category === "I") {
+                interiorRetainers.push(retainerservice);
+            
+            } else if (retainerservice.category === "E") {
+                exteriorRetainers.push(retainerservice);
+            
+            } else {
+                otherRetainers.push(retainerservice);
+            }
+        })
+
+        setInteriorRetainers(interiorRetainers);
+        setExteriorRetainers(exteriorRetainers);
+        setOtherRetainers(otherRetainers);
+
     }
 
     const handleSubmit = async (job, { resetForm }) => {
@@ -80,6 +128,9 @@ const NewJobScreen = () => {
                     fbo: null,
                     comment: "",
                     images: [],
+                    selectedInteriorServices: [],
+                    selectedExteriorServices: [],
+                    selectedOtherServices: [],
                     arrivalDate: null
                 }}
                 onSubmit={handleSubmit}
@@ -122,6 +173,13 @@ const NewJobScreen = () => {
                     numberOfColumns={3}
                     width="100%"
                     PickerItemComponent={CategoryPickerItem}
+                />
+
+                <FormServicePicker
+                    label="Interior Services"
+                    services={interiorServices}
+                    updateServices={setInteriorServices}
+                    name="selectedInteriorServices"
                 />
 
                 <View style={{ marginTop: 20 }}></View>

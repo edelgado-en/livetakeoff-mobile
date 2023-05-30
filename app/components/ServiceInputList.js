@@ -1,7 +1,10 @@
 import React, { useRef } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppButton from "./AppButton";
+import colors from "../config/colors";
+
+import defaultStyles from "../config/styles";
 
 function ServiceInputList({ services = [], onToggleService }) {
   const scrollView = useRef();
@@ -11,15 +14,23 @@ function ServiceInputList({ services = [], onToggleService }) {
       <ScrollView
         ref={scrollView}
         horizontal
-        onContentSizeChange={() => scrollView.current.scrollToEnd()}
       >
         <View style={styles.container}>
           {services.map((service) => (
-            <View key={service.value} style={styles.service}>
-              <AppButton
-                title={service.label}
-                onPress={() => onToggleService(service)}
-              />
+            <View key={service.id} style={styles.service}>
+              <TouchableOpacity style={service.selected ? styles.selected : styles.button}
+                    onPress={() => onToggleService(service)}
+                    >
+                    {service.selected && (
+                        <MaterialCommunityIcons
+                            name={"check"}
+                            size={20}
+                            color={"#10b981"}
+                            style={styles.icon}
+                        />
+                    )}
+                    <Text style={styles.text}>{service.name}</Text>
+              </TouchableOpacity>
             </View>
           ))}
         </View>
@@ -36,6 +47,30 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "100%",
   },
+  icon: {
+    marginRight: 10,
+  },
+  button: {
+        flexDirection: 'row',
+        backgroundColor: colors.light,
+        borderRadius: 25,
+        padding: 15,
+        width: '100%',
+        marginVertical: 2,
+   },
+   selected: {
+        flexDirection: 'row',
+        backgroundColor: "#d1fae5",
+        borderColor: "#10b981",
+        borderRadius: 25,
+        padding: 15,
+        width: '100%',
+        marginVertical: 2,
+   },
+    text: {
+        color: colors.medium,
+        fontSize: 16,
+    }
 });
 
 export default ServiceInputList;

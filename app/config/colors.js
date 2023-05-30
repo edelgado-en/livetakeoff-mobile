@@ -5,5 +5,6 @@ export default {
     white: '#fff',
     medium: '#6e6969',
     dark: '#0c0c0c',
-    light: '#f3f4f6'
+    light: '#f3f4f6',
+    emerald: "#10b981"
 }
