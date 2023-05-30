@@ -6,6 +6,7 @@ import defaultStyles from '../config/styles'
 import AppText from './AppText'
 import Screen from './Screen'
 import PickerItem from './PickerItem'
+import AppTextInput from './AppTextInput'
 
 function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
     const [modalVisible, setModalVisible] = useState(false)
@@ -33,7 +34,16 @@ function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
             </TouchableWithoutFeedback>
             <Modal visible={modalVisible} animationType="slide">
                 <View style={styles.modalContainer}>
-                    <Button title="Close" onPress={() => setModalVisible(false)} />
+                    <Button 
+                        style={styles.closeButton}
+                        title="Close"
+                        onPress={() => setModalVisible(false)} />
+                    {/* <AppTextInput
+                        icon="magnify"
+                        placeholder="Search..."
+                        width="100%"
+                        
+                    /> */}
                     <FlatList 
                         data={items}
                         keyExtractor={item => item.id.toString()}
@@ -75,6 +85,9 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         padding: 20
+    },
+    closeButton: {
+        paddingTop: 10,
     }
 })
 
