@@ -13,10 +13,10 @@ const createJob = (job, onUploadProgress) => {
     data.append("retainer_services", job.selectedRetainerServiceIds)
     data.append("on_site", false)
     data.append("estimated_arrival_date", job.estimatedArrivalDate)
-    data.append("estimated_departure_date", null)
-    data.append("complete_by_date", null)
+    data.append("estimated_departure_date", job.estimatedDepartureDate)
+    data.append("complete_by_date", job.completeByDate)
     data.append("tags", [])
-    data.append("comment", null)
+    data.append("comment", job.comment)
     data.append("requested_by", null)
 
     console.log(job);

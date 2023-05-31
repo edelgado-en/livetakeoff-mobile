@@ -29,7 +29,7 @@ const NewJobScreen = () => {
     const [aircraftTypes, setAircraftTypes] = useState([]);
     const [airports, setAirports] = useState([]);
     const [fbos, setFbos] = useState([]);
-    const [estimatedArrivalDate, setEstimatedArrivalDate] = useState(new Date());
+    const [estimatedArrivalDate, setEstimatedArrivalDate] = useState(null);
     const [estimatedDepartureDate, setEstimatedDepartureDate] = useState(null);
     const [completeByDate, setCompleteByDate] = useState(null);
 
@@ -102,16 +102,24 @@ const NewJobScreen = () => {
         setInteriorRetainers(interiorRetainers);
         setExteriorRetainers(exteriorRetainers);
         setOtherRetainers(otherRetainers);
-
     }
 
     const handleArrivalDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || estimatedArrivalDate;
         setEstimatedArrivalDateOpen(false);
         setEstimatedArrivalDate(currentDate);
+    }
 
-        const formattedDate = moment(currentDate).format('YYYY-MM-DD HH:mm:ss');
-        console.log(formattedDate)
+    const handleDepartureDateChange = (event, selectedDate) => {
+        const currentDate = selectedDate || estimatedDepartureDate;
+        setEstimatedDepartureDateOpen(false);
+        setEstimatedDepartureDate(currentDate);
+    }
+
+    const handleCompleteByDateChange = (event, selectedDate) => {
+        const currentDate = selectedDate || completeByDate;
+        setCompleteByDateOpen(false);
+        setCompleteByDate(currentDate);
     }
 
     const handleSubmit = async (job, { resetForm }) => {
@@ -139,8 +147,17 @@ const NewJobScreen = () => {
             return alert("Please select at least one service.")
         }
         
-        const formattedDate = moment(estimatedArrivalDate).toString();
-        job.estimatedArrivalDate = formattedDate;
+        if (estimatedArrivalDate) {
+            job.estimatedArrivalDate = moment(estimatedArrivalDate).toString();
+        }
+
+        if (estimatedDepartureDate) {
+            job.estimatedDepartureDate = moment(estimatedDepartureDate).toString();
+        }
+
+        if (completeByDate) {
+            job.completeByDate = moment(completeByDate).toString();
+        }
 
         const result = await jobApi.createJob(
                             job,
@@ -161,12 +178,38 @@ const NewJobScreen = () => {
         setEstimatedArrivalDateOpen(false);
     }
 
+    const handleClearDepartureDate = () => {
+        setEstimatedDepartureDate(null);
+        setEstimatedDepartureDateOpen(false);
+    }
+
+    const handleClearCompleteByDate = () => {
+        setCompleteByDate(null);
+        setCompleteByDateOpen(false);
+    }
+
     const handleOpenArrivalDate = () => {
         if (!estimatedArrivalDate) {
             setEstimatedArrivalDate(new Date());
         }
 
         setEstimatedArrivalDateOpen(true);
+    }
+
+    const handleOpenDepartureDate = () => {
+        if (!estimatedDepartureDate) {
+            setEstimatedDepartureDate(new Date());
+        }
+
+        setEstimatedDepartureDateOpen(true);
+    }
+
+    const handleOpenCompleteByDate = () => {
+        if (!completeByDate) {
+            setCompleteByDate(new Date());
+        }
+
+        setCompleteByDateOpen(true);
     }
 
     return (
@@ -250,10 +293,62 @@ const NewJobScreen = () => {
                     </TouchableWithoutFeedback>
                     {estimatedArrivalDateOpen && (
                         <DateTimePicker
-                        value={estimatedArrivalDate}
-                        mode="datetime"
-                        display="inline"
-                        onChange={handleArrivalDateChange}
+                            value={estimatedArrivalDate}
+                            mode="datetime"
+                            display="inline"
+                            onChange={handleArrivalDateChange}
+                        />
+                    )}
+                </View>
+
+                <View>
+                    <View style={styles.labelContainer}>
+                        <AppText style={{ marginTop: 20 }}>Departure Date</AppText>
+                        <View style={styles.clearText}>
+                            <Button 
+                                title="clear" color={colors.primary}
+                                onPress={handleClearDepartureDate}></Button>
+                        </View>
+                    </View>
+                    <TouchableWithoutFeedback 
+                        style={styles.datePickerContainer}
+                         onPress={handleOpenDepartureDate}>
+                            <View style={styles.datePickerContainer}>
+                                <AppText>{estimatedDepartureDate ? estimatedDepartureDate.toString() : ''}</AppText>
+                            </View>
+                    </TouchableWithoutFeedback>
+                    {estimatedDepartureDateOpen && (
+                        <DateTimePicker
+                            value={estimatedDepartureDate}
+                            mode="datetime"
+                            display="inline"
+                            onChange={handleDepartureDateChange}
+                        />
+                    )}
+                </View>
+
+                <View>
+                    <View style={styles.labelContainer}>
+                        <AppText style={{ marginTop: 20 }}>Complete By</AppText>
+                        <View style={styles.clearText}>
+                            <Button 
+                                title="clear" color={colors.primary}
+                                onPress={handleClearCompleteByDate}></Button>
+                        </View>
+                    </View>
+                    <TouchableWithoutFeedback 
+                        style={styles.datePickerContainer}
+                         onPress={handleOpenCompleteByDate}>
+                            <View style={styles.datePickerContainer}>
+                                <AppText>{completeByDate ? completeByDate.toString() : ''}</AppText>
+                            </View>
+                    </TouchableWithoutFeedback>
+                    {completeByDateOpen && (
+                        <DateTimePicker
+                            value={completeByDate}
+                            mode="datetime"
+                            display="inline"
+                            onChange={handleCompleteByDateChange}
                         />
                     )}
                 </View>
@@ -350,4 +445,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NewJobScreen
+export default NewJobScreen;
