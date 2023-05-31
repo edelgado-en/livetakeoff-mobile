@@ -3,11 +3,12 @@
     "name": "livetakeoff",
     "slug": "livetakeoff",
     "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/logo_square.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/logo_square.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,14 +18,8 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
     "web": {
-      "favicon": "./assets/logo.png"
+      "favicon": "./assets/logo_square.png"
     }
   }
 }
