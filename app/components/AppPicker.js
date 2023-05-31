@@ -10,6 +10,12 @@ import AppTextInput from './AppTextInput'
 
 function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
     const [modalVisible, setModalVisible] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
+    const [stateItems, setStateItems] = useState(items)
+
+    const filteredItems = searchTerm
+        ? stateItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        : stateItems;
 
     return (
         <>
@@ -38,14 +44,15 @@ function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
                         style={styles.closeButton}
                         title="Close"
                         onPress={() => setModalVisible(false)} />
-                    {/* <AppTextInput
+                    <AppTextInput
                         icon="magnify"
                         placeholder="Search..."
                         width="100%"
-                        
-                    /> */}
+                        onChangeText={text => setSearchTerm(text)}
+                        value={searchTerm}
+                    />
                     <FlatList 
-                        data={items}
+                        data={filteredItems}
                         keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) => 
                             <PickerItem 
@@ -84,7 +91,8 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        marginVertical: 20
     },
     closeButton: {
         paddingTop: 10,
