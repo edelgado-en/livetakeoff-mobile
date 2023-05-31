@@ -12,7 +12,7 @@ const createJob = (job, onUploadProgress) => {
     data.append("services", job.selectedServiceIds)
     data.append("retainer_services", job.selectedRetainerServiceIds)
     data.append("on_site", false)
-    data.append("estimated_arrival_date", null)
+    data.append("estimated_arrival_date", job.estimatedArrivalDate)
     data.append("estimated_departure_date", null)
     data.append("complete_by_date", null)
     data.append("tags", [])

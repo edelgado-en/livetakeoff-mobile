@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ScrollView, TextInput } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, TextInput, Button, TouchableWithoutFeedback } from 'react-native'
 import * as Yup from 'yup'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { useFormikContext } from 'formik'
+import moment from 'moment'
 
 import AppForm from '../components/AppForm'
 import AppFormField from '../components/AppFormField'
@@ -19,6 +20,7 @@ import defaultStyles from '../config/styles'
 import UploadScreen from './UploadScreen'
 
 import jobApi from '../api/job'
+import colors from '../config/colors'
 
 const NewJobScreen = () => {
     const [uploadVisible, setUploadVisible] = useState(false);
@@ -27,6 +29,15 @@ const NewJobScreen = () => {
     const [aircraftTypes, setAircraftTypes] = useState([]);
     const [airports, setAirports] = useState([]);
     const [fbos, setFbos] = useState([]);
+    const [estimatedArrivalDate, setEstimatedArrivalDate] = useState(new Date());
+    const [estimatedDepartureDate, setEstimatedDepartureDate] = useState(null);
+    const [completeByDate, setCompleteByDate] = useState(null);
+
+    const [estimatedArrivalDateOpen, setEstimatedArrivalDateOpen] = useState(false);
+    const [estimatedDepartureDateOpen, setEstimatedDepartureDateOpen] = useState(false);
+    const [completeByDateOpen, setCompleteByDateOpen] = useState(false);
+
+    const [onSite, setOnSite] = useState(false);
 
     const [interiorServices, setInteriorServices] = useState([]);
     const [exteriorServices, setExteriorServices] = useState([]);
@@ -94,6 +105,15 @@ const NewJobScreen = () => {
 
     }
 
+    const handleArrivalDateChange = (event, selectedDate) => {
+        const currentDate = selectedDate || estimatedArrivalDate;
+        setEstimatedArrivalDateOpen(false);
+        setEstimatedArrivalDate(currentDate);
+
+        const formattedDate = moment(currentDate).format('YYYY-MM-DD HH:mm:ss');
+        console.log(formattedDate)
+    }
+
     const handleSubmit = async (job, { resetForm }) => {
         setProgress(0);
         setUploadVisible(true);
@@ -118,6 +138,9 @@ const NewJobScreen = () => {
             setUploadVisible(false);
             return alert("Please select at least one service.")
         }
+        
+        const formattedDate = moment(estimatedArrivalDate).toString();
+        job.estimatedArrivalDate = formattedDate;
 
         const result = await jobApi.createJob(
                             job,
@@ -131,6 +154,19 @@ const NewJobScreen = () => {
         }
 
         resetForm();
+    }
+
+    const handleClearArrivalDate = () => {
+        setEstimatedArrivalDate(null);
+        setEstimatedArrivalDateOpen(false);
+    }
+
+    const handleOpenArrivalDate = () => {
+        if (!estimatedArrivalDate) {
+            setEstimatedArrivalDate(new Date());
+        }
+
+        setEstimatedArrivalDateOpen(true);
     }
 
     return (
@@ -195,6 +231,32 @@ const NewJobScreen = () => {
                     width="100%"
                     PickerItemComponent={CategoryPickerItem}
                 />
+
+                <View>
+                    <View style={styles.labelContainer}>
+                        <AppText style={{ marginTop: 20 }}>Arrival Date</AppText>
+                        <View style={styles.clearText}>
+                            <Button 
+                                title="clear" color={colors.primary}
+                                onPress={handleClearArrivalDate}></Button>
+                        </View>
+                    </View>
+                    <TouchableWithoutFeedback 
+                        style={styles.datePickerContainer}
+                         onPress={handleOpenArrivalDate}>
+                            <View style={styles.datePickerContainer}>
+                                <AppText>{estimatedArrivalDate ? estimatedArrivalDate.toString() : ''}</AppText>
+                            </View>
+                    </TouchableWithoutFeedback>
+                    {estimatedArrivalDateOpen && (
+                        <DateTimePicker
+                        value={estimatedArrivalDate}
+                        mode="datetime"
+                        display="inline"
+                        onChange={handleArrivalDateChange}
+                        />
+                    )}
+                </View>
 
                 <View style={styles.separator}></View>
 
@@ -267,6 +329,24 @@ const styles = StyleSheet.create({
         borderBottomColor: defaultStyles.colors.light,
         width: '100%',
         borderBottomWidth: 1
+    },
+    clearText: {
+        color: colors.primary,
+        position: 'relative',
+        top: 10,
+    },
+    labelContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+
+    },
+    datePickerContainer: {
+        backgroundColor: defaultStyles.colors.light,
+        borderRadius: 25,
+        flexDirection: 'row',   
+        width: '100%',
+        padding: 15,
+        marginVertical: 5,
     }
 })
 
