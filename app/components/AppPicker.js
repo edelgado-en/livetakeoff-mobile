@@ -11,11 +11,10 @@ import AppTextInput from './AppTextInput'
 function AppPicker({ items, icon, placeholder, onSelectItem, selectedItem }) {
     const [modalVisible, setModalVisible] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-    const [stateItems, setStateItems] = useState(items)
 
-    const filteredItems = searchTerm
-        ? stateItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
-        : stateItems;
+    const filteredItems = searchTerm.length > 0
+        ? items.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        : items;
 
     return (
         <>
